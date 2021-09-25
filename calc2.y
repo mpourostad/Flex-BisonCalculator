@@ -43,6 +43,7 @@ USD_TO_GBP GBP_TO_EURO EURO_TO_GBP USD_TO_EURO GBP_TO_USD
 prog : expr                             { std::cout << $1 << std::endl; }
      ;
 
+
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }
      | expr MUL expr                    { $$ = $1 * $3; }
@@ -54,27 +55,27 @@ expr : expr PLUS expr                   { $$ = $1 + $3; }
      | LPAREN expr RPAREN               { $$ = $2; }
      | PI                               { $$ = 3.14; }
      | EQUALS                           { printf("GOOOOH") }//{ printf("\tGOOOOH: %i\n", $1); }//
-     | SQRT LPAREN expr RPAREN          { $$ = sqrt($3); }
+     | SQRT expr                        { $$ = sqrt($2); }
      | expr FACTORIAL                   { $$ = factorial($1); }
-     | ABS LPAREN expr RPAREN           { $$ = abs($3); }
-     | LOG10 expr                       { $$ = log($3) / log(10); }
+     | ABS expr                         { $$ = abs($2); }
+     | LOG10 expr                       { $$ = log($2) / log(10); }
      | LOG2  expr                       { $$ = log($2) / log(2); }
-     | FLOOR LPAREN expr RPAREN         { $$ = floor($3); }
-     | CEIL LPAREN expr RPAREN          { $$ = ceil($3); }
-     | GBP_TO_USD LPAREN expr RPAREN    { $$ = gbp_to_usd($3); }
-     | USD_TO_GBP LPAREN expr RPAREN    { $$ = usd_to_gbp($3); }
-     | GBP_TO_EURO LPAREN expr RPAREN    { $$ = gbp_to_euro($3); }
-     | EURO_TO_GBP LPAREN expr RPAREN    { $$ = euro_to_gbp($3); }
-     | USD_TO_EURO LPAREN expr RPAREN    { $$ = usd_to_euro($3); }
-     | EURO_TO_USD LPAREN expr RPAREN    { $$ = euro_to_usd($3); }
-     | CEL_TO_FAH LPAREN expr RPAREN    { $$ = cel_to_fah($3); }
-     | FAH_TO_CEL LPAREN expr RPAREN    { $$ = fah_to_cel($3); }
-     | MI_TO_KM LPAREN expr RPAREN    { $$ = m_to_km($3); }
-     | KM_TO_MI LPAREN expr RPAREN    { $$ = km_to_m($3); }
-     | SIN LPAREN expr RPAREN          { $$ = sin($3); }
-     | COS LPAREN expr RPAREN          { $$ = cos($3); }
-     | TAN LPAREN expr RPAREN          { $$ = sin($3)/cos($3); }
-     | PLUS expr                       {$$ = $2; }
+     | FLOOR expr                       { $$ = floor($2); }
+     | CEIL expr                        { $$ = ceil($2); }
+     | expr GBP_TO_USD                  { $$ = gbp_to_usd($1); }
+     | expr USD_TO_GBP                  { $$ = usd_to_gbp($1); }
+     | expr GBP_TO_EURO                 { $$ = gbp_to_euro($1); }
+     | expr EURO_TO_GBP                 { $$ = euro_to_gbp($1); }
+     | expr USD_TO_EURO                 { $$ = usd_to_euro($1); }
+     | expr EURO_TO_USD                 { $$ = euro_to_usd($1); }
+     | expr CEL_TO_FAH                  { $$ = cel_to_fah($1); }
+     | expr FAH_TO_CEL                  { $$ = fah_to_cel($1); }
+     | expr MI_TO_KM                    { $$ = m_to_km($1); }
+     | expr KM_TO_MI                    { $$ = km_to_m($1); }
+     | SIN expr                         { $$ = sin($2); }
+     | COS expr                         { $$ = cos($2); }
+     | TAN expr                         { $$ = sin($2)/cos($2); }
+     | MINUS expr                        { $$ = $2; }
 
     
      ;
